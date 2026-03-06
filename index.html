@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Galileo's Ramp Open Day Dashboard</title>
+    <meta
+      name="description"
+      content="Live dashboard for Galileo's Ramp experiment outcomes from Google Apps Script and Google Sheets."
+    />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="page-header">
+      <h1>Galileo's Ramp</h1>
+      <p>Open Day Experiment Dashboard</p>
+    </header>
+
+    <main class="dashboard" aria-live="polite">
+      <section class="cards" aria-label="summary statistics">
+        <article class="card">
+          <h2>Total Experiments</h2>
+          <p id="total-experiments" class="metric">--</p>
+        </article>
+        <article class="card">
+          <h2>Mean of g</h2>
+          <p id="mean-g" class="metric">--</p>
+        </article>
+        <article class="card">
+          <h2>Standard Deviation</h2>
+          <p id="sd-g" class="metric">--</p>
+        </article>
+      </section>
+
+      <section class="chart-section" aria-labelledby="histogram-title">
+        <div class="chart-header">
+          <h2 id="histogram-title">Histogram of g values</h2>
+          <button id="refresh-btn" type="button">Refresh Data</button>
+        </div>
+        <canvas id="g-histogram" role="img" aria-label="Histogram of measured g values"></canvas>
+      </section>
+
+      <section class="table-section" aria-labelledby="recent-data-title">
+        <h2 id="recent-data-title">Recent Experiments</h2>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Timestamp (UTC)</th>
+                <th>Experiment</th>
+                <th>g (m/s²)</th>
+              </tr>
+            </thead>
+            <tbody id="data-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <p id="status" class="status" role="status">Loading data…</p>
+    </main>
+  </body>
+</html>
