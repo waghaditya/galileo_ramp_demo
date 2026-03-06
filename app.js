@@ -9,9 +9,12 @@ const els = {
   tableBody: document.querySelector("#data-table-body"),
   refreshBtn: document.querySelector("#refresh-btn"),
   chartCanvas: document.querySelector("#g-histogram"),
+  shareTwitter: document.querySelector("#share-twitter"),
+  shareWhatsApp: document.querySelector("#share-whatsapp"),
 };
 
 let histogramChart;
+let isLoading = false;
 
 function mean(values) {
   if (!values.length) return 0;
@@ -82,7 +85,10 @@ function renderChart(values) {
   const { labels, counts } = buildHistogram(values);
 
   if (histogramChart) {
-    histogramChart.destroy();
+    histogramChart.data.labels = labels;
+    histogramChart.data.datasets[0].data = counts;
+    histogramChart.update("none");
+    return;
   }
 
   histogramChart = new Chart(els.chartCanvas, {
@@ -100,6 +106,7 @@ function renderChart(values) {
       ],
     },
     options: {
+      animation: false,
       responsive: true,
       maintainAspectRatio: false,
       scales: {
@@ -117,6 +124,16 @@ function renderChart(values) {
   });
 }
 
+function setupShareLinks() {
+  const shareText = "Check out Galileo's Ramp Open Day Dashboard";
+  const shareUrl = window.location.href;
+  const encodedText = encodeURIComponent(shareText);
+  const encodedUrl = encodeURIComponent(shareUrl);
+
+  els.shareTwitter.href = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`;
+  els.shareWhatsApp.href = `https://wa.me/?text=${encodedText}%20${encodedUrl}`;
+}
+
 function updateSummary(values) {
   els.total.textContent = String(values.length);
   els.mean.textContent = formatNumber(mean(values));
@@ -124,6 +141,8 @@ function updateSummary(values) {
 }
 
 async function loadData() {
+  if (isLoading) return;
+  isLoading = true;
   els.status.textContent = "Loading data…";
   els.refreshBtn.disabled = true;
 
@@ -144,9 +163,11 @@ async function loadData() {
   } catch (error) {
     els.status.textContent = `Unable to load data from Google Apps Script (${error.message}).`;
   } finally {
+    isLoading = false;
     els.refreshBtn.disabled = false;
   }
 }
 
 els.refreshBtn.addEventListener("click", loadData);
+setupShareLinks();
 loadData();
