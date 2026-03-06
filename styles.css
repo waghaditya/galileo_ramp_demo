@@ -97,10 +97,38 @@ button:hover {
   opacity: 0.9;
 }
 
+.chart-container {
+  position: relative;
+  height: 180px;
+  margin-top: 0.8rem;
+}
+
 canvas {
   width: 100%;
-  min-height: 260px;
-  margin-top: 0.8rem;
+  height: 100%;
+}
+
+.share-buttons {
+  margin-top: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.share-btn {
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 0.55rem 0.9rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.share-twitter {
+  background: #111827;
+}
+
+.share-whatsapp {
+  background: #0a9f46;
 }
 
 .table-wrapper {
@@ -134,5 +162,9 @@ td {
   th,
   td {
     font-size: 0.85rem;
+  }
+
+  .chart-container {
+    height: 160px;
   }
 }

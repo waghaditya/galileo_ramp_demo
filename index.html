@@ -40,7 +40,13 @@
           <h2 id="histogram-title">Histogram of g values</h2>
           <button id="refresh-btn" type="button">Refresh Data</button>
         </div>
-        <canvas id="g-histogram" role="img" aria-label="Histogram of measured g values"></canvas>
+        <div class="chart-container">
+          <canvas id="g-histogram" role="img" aria-label="Histogram of measured g values"></canvas>
+        </div>
+        <div class="share-buttons" aria-label="share dashboard links">
+          <a id="share-twitter" class="share-btn share-twitter" target="_blank" rel="noopener noreferrer">Share on X</a>
+          <a id="share-whatsapp" class="share-btn share-whatsapp" target="_blank" rel="noopener noreferrer">Share on WhatsApp</a>
+        </div>
       </section>
 
       <section class="table-section" aria-labelledby="recent-data-title">
